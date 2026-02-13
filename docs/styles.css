@@ -1,0 +1,540 @@
+/* Train Themed Valentine's*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Beautiful gradient background */
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('trainbg.jpg') center/cover no-repeat;
+    z-index: 0;
+    background-attachment: fixed;
+}
+
+/* Train Tracks Container */
+.train-tracks-container {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Train image styling within train-interactive-content */
+.train-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 210px;
+    z-index: 1;
+    opacity: 0.9;
+    filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.3));
+}
+
+/* Main Content Wrapper */
+.content-wrapper {
+    position: relative;
+    z-index: 50;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Arched Valentine Text SVG */
+.arched-valentine-text-svg {
+    position: absolute;
+    top: 20%; /* Adjusted to be near the top */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centered horizontally, and vertically aligned relative to top: 10% */
+    width: 900px;
+    height: 180px;
+    z-index: 100;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    pointer-events: none;
+}
+
+.arched-valentine-text {
+    font-family: 'Pacifico', cursive;
+    font-size: 50px;
+    font-weight: 900;
+    letter-spacing: 0px;
+    fill: white;
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.5)) drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+    text-anchor: middle;
+}
+
+/* Trains Container - Stack Vertically */
+.trains-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+/* Reset train-section to be a flex container that centers its children */
+.train-section {
+    display: flex;
+    justify-content: center; /* Center train-interactive-content horizontally */
+    align-items: center;     /* Center train-interactive-content vertically */
+    position: relative; /* For positioning signal light and shy container */
+    height: 40vh;
+    width: 100%;
+}
+
+/* New wrapper for train image and button */
+.train-interactive-content {
+    position: relative; /* Crucial for absolute positioning of children */
+    width: 420px; /* Image width */
+    height: 300px; /* Sufficient height to contain image and button */
+    /* This container itself will be centered by .train-section */
+}
+
+.yes-train-section {
+    order: 1;
+}
+
+.no-train-section {
+    order: 2;
+}
+
+/* Signal Light */
+.signal-light {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #90EE90;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 260px);
+    transform: translateY(-50%);
+    box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
+    border: 2px solid #333;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.signal-light.red {
+    background: #ff4444;
+    opacity: 1;
+    animation: redLightPulse 0.5s ease infinite, redLightGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes redLightPulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 68, 68, 0.8), 0 0 30px rgba(255, 68, 68, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 68, 68, 1), 0 0 50px rgba(255, 68, 68, 0.6);
+    }
+}
+
+@keyframes redLightGlow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Shy Container - position relative to .no-train-section, but JS will adjust it */
+.shy-container {
+    position: absolute;
+    /* Default position, will be adjusted by script.js */
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.wait-message {
+    font-size: 0.9em;
+    font-style: italic;
+    animation: blink 1s ease-in-out infinite;
+    z-index: 2;
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    top: calc(50% + 60px);
+    left: calc(50% - 280px);
+    transform: translateX(-50%);
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.5; }
+}
+
+.cancellation-message {
+    font-size: 1.3em;
+    color: #FF4444;
+    font-weight: 600;
+    margin-top: 20px;
+    animation: slideInDown 0.5s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Train Button with Image */
+.btn {
+    padding: 15px 35px; /* RESTORED */
+    font-size: 1.1em;   /* RESTORED */
+    font-weight: 900;
+    border: none;       /* RESTORED */
+    border-radius: 60px;/* RESTORED */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: auto;
+    position: relative;
+}
+
+.btn-yes {
+    color: white;
+    border-color: #FFB6D9;
+    background: linear-gradient(135deg, #FFB6D9 0%, #FFC0E0 100%);
+    position: absolute;
+    top: calc(50% + 120px); /* Position below the train image */
+    left: 50%;
+    transform: translateX(-50%); /* Horizontal centering only */
+    z-index: 10;
+}
+
+.btn-yes:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.btn-yes:active {
+    transform: translateX(-50%) translateY(-1px);
+}
+
+.btn-no {
+    color: #FFB6C1;
+    border-color: #FFB6C1;
+    background: white;
+    position: absolute;
+    top: calc(50% + 120px); /* Position below the train image */
+    left: 50%;
+    transform: translateX(-50%); /* Horizontal centering only */
+    z-index: 10;
+}
+
+.btn-no:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(100, 100, 100, 0.5);
+}
+
+.btn-no:active {
+    transform: translateX(-50%) translateY(-1px);
+}
+
+.btn-no.disabled {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8);
+    transition: all 0.4s ease;
+}
+
+/* Track path (hidden by default) */
+.hidden {
+    display: none !important;
+}
+
+#trackPath {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Success Screen */
+.success-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    animation: fadeInScale 0.6s ease;
+    gap: 20px; /* Add some space between the text and the next elements */
+}
+
+.success-screen.hidden {
+    display: none;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-content {
+    text-align: center;
+    background: white;
+    padding: 50px;
+    border-radius: 25px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 100px rgba(230, 57, 70, 0.4);
+    max-width: 600px;
+    border: 3px solid #e63946;
+    animation: successBounce 0.8s ease;
+}
+
+@keyframes successBounce {
+    0% { transform: scale(0.8) rotateY(10deg); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1) rotateY(0); }
+}
+
+.success-title {
+    font-size: 3.2em;
+    color: #e63946;
+    margin-bottom: 15px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    animation: successTitleFlash 1s ease-in-out infinite;
+}
+
+@keyframes successTitleFlash {
+    0%, 100% { text-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
+    50% { text-shadow: 0 0 40px rgba(230, 57, 70, 0.8); }
+}
+
+.success-text {
+    font-size: 1.6em;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .content {
+        padding: 25px 15px;
+        width: 95%;
+    }
+
+    .title {
+        font-size: 1.8em;
+    }
+
+    .subtitle {
+        font-size: 0.95em;
+    }
+
+    .question {
+        font-size: 1.5em;
+    }
+
+    .emoji {
+        font-size: 4.5em;
+    }
+
+    .game-stats {
+        font-size: 0.9em;
+    }
+
+    .success-content {
+        padding: 25px 15px;
+    }
+
+    .success-title {
+        font-size: 2.2em;
+    }
+
+    .success-text {
+        font-size: 1.3em;
+    }
+
+    .success-trains {
+        font-size: 3em;
+    }
+
+    .celebration {
+        font-size: 3em;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 1em;
+        min-width: auto;
+    }
+
+    .btn-yes {
+        padding: 12px 25px;
+    }
+}
+
+.success-elements-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center;    /* Center children horizontally */
+    gap: 20px;
+}
+
+#wordByWordContainer {
+    font-size: 4em;
+    font-family: 'Pacifico', cursive;
+    color: #c9354b;
+    text-align: center;
+    width: 90%;
+    max-width: 900px;
+    line-height: 1.4;
+    text-shadow: 2px 2px 4px rgba(249, 248, 248, 0.5);
+    /* Removed positioning styles to allow flexbox to handle it */
+}
+
+.word-by-word-text span {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.btn.btn-yes.muah-btn {
+    position: static;
+    transform: none;
+}
+
+.btn.btn-yes.muah-btn:hover {
+    transform: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.cancellation-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.timetable-content {
+    text-align: center;
+    background: white;
+    padding: 60px;
+    border-radius: 25px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 100px rgba(230, 57, 70, 0.4);
+    max-width: 800px;
+    border: 3px solid #e63946;
+}
+
+.timetable-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 3em;
+    color: #e63946;
+    margin-bottom: 20px;
+}
+
+.timetable table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.timetable th, .timetable td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.timetable th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: 600;
+}
+
+.timetable .cancelled-row {
+    color: #e63946;
+    font-weight: bold;
+}
+
+.timetable .relocated-row {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.timetable-message {
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.shy-message {
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+}

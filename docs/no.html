@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Train - Cancellation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="background"></div>
+        <div id="cancellationScreen" class="cancellation-screen">
+            <div class="timetable-content">
+                <h1 class="timetable-title">TRAIN TIMETABLE</h1>
+                <div class="timetable">
+                    <table>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Destination</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr class="cancelled-row">
+                            <td>Platform 1</td>
+                            <td>No Station</td>
+                            <td>❌ CANCELLED</td>
+                        </tr>
+                        <tr class="relocated-row">
+                            <td>Platform 2</td>
+                            <td>Yes Station ❤️</td>
+                            <td>ON TIME</td>
+                        </tr>
+                    </table>
+                </div>
+                <p class="timetable-message">Due to a fault on this train, the train has been moved to the YES platform.</p>
+                <button id="restartBtn2" class="btn btn-yes muah-btn">Stairs to Platform</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('restartBtn2').addEventListener('click', () => {
+            window.location.href = 'index.html'; // Go back to the main page
+        });
+    </script>
+</body>
+</html>

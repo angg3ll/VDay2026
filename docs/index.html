@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Train</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Background with image -->
+        <div class="background"></div>
+        
+        <svg id="valentineTextSvg" class="arched-valentine-text-svg" viewBox="0 0 800 150">
+            <path id="curve" d="M10,120 Q400,30 790,120" fill="transparent"/>
+            <text>
+                <textPath xlink:href="#curve" class="arched-valentine-text" startOffset="50%">
+                    Will you be my Valentine?
+                </textPath>
+            </text>
+        </svg>
+
+        <!-- Train Tracks -->
+        <div class="train-tracks-container">
+        </div>
+        
+        <!-- Main Content -->
+        <div id="contentWrapper" class="content-wrapper">
+            <!-- Train Tracks -->
+            <div class="trains-container">
+                <!-- Yes Train -->
+                <div class="train-section yes-train-section">
+                    <div class="train-interactive-content">
+                        <img src="trainnobg.png" alt="Yes Train" class="train-image">
+                        <button id="yesBtn" class="btn btn-yes">Yes</button>
+                    </div>
+                </div>
+
+                <!-- No Train -->
+                <div class="train-section no-train-section">
+                    <div class="signal-light" id="signalLight"></div>
+                    <div class="train-interactive-content">
+                        <img src="trainnobg.png" alt="No Train" class="train-image">
+                        <button id="noBtn" class="btn btn-no">No</button>
+                    </div>
+                    <div id="shyContainer" class="shy-container hidden">
+                        <span id="shyMessage" class="shy-message">no pls dont click me, im shy</span>
+                        <img id="shyImage" src="shy.png" alt="Shy Emoji" class="shy-image">
+                    </div>
+                    <p class="wait-message" id="waitMessage" style="display: none;">Please wait...</p>
+                </div>
+            </div>
+
+            <p class="cancellation-message" id="cancellationMessage" style="display: none;">❌ No Train Was Cancelled</p>
+        </div>
+
+        <!-- SVG Track Path for No button animation -->
+        <svg id="trackPath" class="hidden" viewBox="0 0 1000 800" preserveAspectRatio="none">
+            <path id="animationPath" d="M 500,100 Q 300,200 400,400 T 100,650 Q 200,750 500,700 T 900,500 Q 800,300 600,200" 
+                  fill="none" stroke="#8B4513" stroke-width="30" opacity="0.3"/>
+        </svg>
+    </div>
+
+    <!-- Success Screen (Full Page Overlay) -->
+    <div id="successScreen" class="success-screen hidden">
+        <div id="successContent" class="success-content">
+            <h1 class="success-title">Is it getting hot in here, or did this train just enter a tunnel? </h1>
+            <p class="success-text">MUAH</p>
+        </div>
+        <div id="wordByWordContainer"></div>
+        <div class="success-elements-container">
+            <img id="winkGif" src="wink.gif" alt="Wink Emoji" class="hidden">
+            <button id="muahBtn" class="btn btn-yes muah-btn hidden">;)</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
