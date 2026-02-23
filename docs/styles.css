@@ -1,5 +1,10 @@
 /* Train Themed Valentine's*/
 
+:root {
+    --train-width: 420px;
+    --train-aspect-ratio: 2; /* 420 / 210 */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -66,8 +71,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 420px;
-    height: 210px;
+    width: 100%;
+    max-width: var(--train-width);
+    height: auto;
+    aspect-ratio: var(--train-aspect-ratio);
     z-index: 1;
     opacity: 0.9;
     filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.3));
@@ -82,16 +89,18 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 40px;
+    width: 100%;
 }
 
 /* Arched Valentine Text SVG */
 .arched-valentine-text-svg {
     position: absolute;
-    top: 20%; /* Adjusted to be near the top */
+    top: 15%; /* Adjusted slightly for mobile */
     left: 50%;
     transform: translate(-50%, -50%); /* Centered horizontally, and vertically aligned relative to top: 10% */
-    width: 900px;
-    height: 180px;
+    width: 95vw;
+    max-width: 900px;
+    height: auto;
     z-index: 100;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     pointer-events: none;
@@ -113,8 +122,9 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 60px;
     margin-bottom: 30px;
+    width: 100%;
 }
 
 /* Reset train-section to be a flex container that centers its children */
@@ -123,16 +133,16 @@ body {
     justify-content: center; /* Center train-interactive-content horizontally */
     align-items: center;     /* Center train-interactive-content vertically */
     position: relative; /* For positioning signal light and shy container */
-    height: 40vh;
+    height: 35vh; /* Adjusted for better fit */
     width: 100%;
 }
 
 /* New wrapper for train image and button */
 .train-interactive-content {
     position: relative; /* Crucial for absolute positioning of children */
-    width: 420px; /* Image width */
+    width: 90vw;
+    max-width: var(--train-width);
     height: 300px; /* Sufficient height to contain image and button */
-    /* This container itself will be centered by .train-section */
 }
 
 .yes-train-section {
@@ -145,19 +155,26 @@ body {
 
 /* Signal Light */
 .signal-light {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: #90EE90;
     position: absolute;
     top: 50%;
-    left: calc(50% - 260px);
+    left: 5%; /* Relative positioning for mobile */
     transform: translateY(-50%);
     box-shadow: 0 0 10px rgba(144, 238, 144, 0.6);
     border: 2px solid #333;
     opacity: 0;
     transition: all 0.3s ease;
     z-index: 2;
+}
+
+/* Desktop override for signal light */
+@media (min-width: 800px) {
+    .signal-light {
+        left: calc(50% - 260px);
+    }
 }
 
 .signal-light.red {
@@ -187,6 +204,12 @@ body {
     top: 0;
     left: 0;
     z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.shy-container.visible {
+    display: block !important;
+    opacity: 1;
 }
 
 .wait-message {
@@ -199,8 +222,8 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
     position: absolute;
-    top: calc(50% + 60px);
-    left: calc(50% - 280px);
+    top: calc(50% + 70px);
+    left: 50%;
     transform: translateX(-50%);
 }
 
@@ -210,7 +233,7 @@ body {
 }
 
 .cancellation-message {
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: #FF4444;
     font-weight: 600;
     margin-top: 20px;
@@ -230,11 +253,11 @@ body {
 
 /* Train Button with Image */
 .btn {
-    padding: 15px 35px; /* RESTORED */
-    font-size: 1.1em;   /* RESTORED */
+    padding: 12px 25px;
+    font-size: 1em;
     font-weight: 900;
-    border: none;       /* RESTORED */
-    border-radius: 60px;/* RESTORED */
+    border: none;
+    border-radius: 60px;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
@@ -250,7 +273,7 @@ body {
     border-color: #FFB6D9;
     background: linear-gradient(135deg, #FFB6D9 0%, #FFC0E0 100%);
     position: absolute;
-    top: calc(50% + 120px); /* Position below the train image */
+    top: 85%; /* Relative positioning */
     left: 50%;
     transform: translateX(-50%); /* Horizontal centering only */
     z-index: 10;
@@ -270,7 +293,7 @@ body {
     border-color: #FFB6C1;
     background: white;
     position: absolute;
-    top: calc(50% + 120px); /* Position below the train image */
+    top: 85%; /* Relative positioning */
     left: 50%;
     transform: translateX(-50%); /* Horizontal centering only */
     z-index: 10;
@@ -321,6 +344,7 @@ body {
     z-index: 200;
     animation: fadeInScale 0.6s ease;
     gap: 20px; /* Add some space between the text and the next elements */
+    padding: 20px;
 }
 
 .success-screen.hidden {
@@ -341,9 +365,10 @@ body {
 .success-content {
     text-align: center;
     background: white;
-    padding: 50px;
+    padding: 30px 20px;
     border-radius: 25px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 100px rgba(230, 57, 70, 0.4);
+    width: 90%;
     max-width: 600px;
     border: 3px solid #e63946;
     animation: successBounce 0.8s ease;
@@ -356,11 +381,11 @@ body {
 }
 
 .success-title {
-    font-size: 3.2em;
+    font-size: 2em;
     color: #e63946;
     margin-bottom: 15px;
     font-weight: 900;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     animation: successTitleFlash 1s ease-in-out infinite;
 }
 
@@ -370,67 +395,34 @@ body {
 }
 
 .success-text {
-    font-size: 1.6em;
+    font-size: 1.3em;
     color: #333;
     margin-bottom: 10px;
     font-weight: 700;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-    .content {
-        padding: 25px 15px;
-        width: 95%;
+/* Responsive Design Overrides */
+@media (min-width: 800px) {
+    .btn {
+        padding: 15px 35px;
+        font-size: 1.1em;
     }
-
-    .title {
-        font-size: 1.8em;
-    }
-
-    .subtitle {
-        font-size: 0.95em;
-    }
-
-    .question {
-        font-size: 1.5em;
-    }
-
-    .emoji {
-        font-size: 4.5em;
-    }
-
-    .game-stats {
-        font-size: 0.9em;
-    }
-
+    
     .success-content {
-        padding: 25px 15px;
+        padding: 50px;
     }
 
     .success-title {
-        font-size: 2.2em;
+        font-size: 3.2em;
+        letter-spacing: 2px;
     }
 
     .success-text {
-        font-size: 1.3em;
+        font-size: 1.6em;
     }
 
-    .success-trains {
-        font-size: 3em;
-    }
-
-    .celebration {
-        font-size: 3em;
-    }
-
-    .btn {
-        padding: 12px 20px;
-        font-size: 1em;
-        min-width: auto;
-    }
-
-    .btn-yes {
-        padding: 12px 25px;
+    .btn-yes, .btn-no {
+        top: calc(50% + 120px);
     }
 }
 
@@ -442,7 +434,7 @@ body {
 }
 
 #wordByWordContainer {
-    font-size: 4em;
+    font-size: 2.5em;
     font-family: 'Pacifico', cursive;
     color: #c9354b;
     text-align: center;
@@ -450,7 +442,12 @@ body {
     max-width: 900px;
     line-height: 1.4;
     text-shadow: 2px 2px 4px rgba(249, 248, 248, 0.5);
-    /* Removed positioning styles to allow flexbox to handle it */
+}
+
+@media (min-width: 800px) {
+    #wordByWordContainer {
+        font-size: 4em;
+    }
 }
 
 .word-by-word-text span {
@@ -478,35 +475,66 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 200;
+    padding: 15px;
 }
 
 .timetable-content {
     text-align: center;
     background: white;
-    padding: 60px;
+    padding: 30px 15px;
     border-radius: 25px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 100px rgba(230, 57, 70, 0.4);
+    width: 100%;
     max-width: 800px;
     border: 3px solid #e63946;
 }
 
+@media (min-width: 800px) {
+    .timetable-content {
+        padding: 60px;
+    }
+}
+
 .timetable-title {
     font-family: 'Pacifico', cursive;
-    font-size: 3em;
+    font-size: 2em;
     color: #e63946;
     margin-bottom: 20px;
+}
+
+@media (min-width: 800px) {
+    .timetable-title {
+        font-size: 3em;
+    }
+}
+
+.timetable {
+    overflow-x: auto;
 }
 
 .timetable table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    font-size: 0.9em;
+}
+
+@media (min-width: 800px) {
+    .timetable table {
+        font-size: 1em;
+    }
 }
 
 .timetable th, .timetable td {
-    padding: 15px;
+    padding: 10px 5px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+}
+
+@media (min-width: 800px) {
+    .timetable th, .timetable td {
+        padding: 15px;
+    }
 }
 
 .timetable th {
@@ -527,9 +555,15 @@ body {
 
 .timetable-message {
     margin-top: 20px;
-    font-size: 1.2em;
+    font-size: 1em;
     color: black;
     margin-bottom: 20px;
+}
+
+@media (min-width: 800px) {
+    .timetable-message {
+        font-size: 1.2em;
+    }
 }
 
 .shy-message {
@@ -537,4 +571,11 @@ body {
     color: black;
     padding: 5px 10px;
     border-radius: 5px;
+    font-size: 0.8em;
+}
+
+@media (min-width: 800px) {
+    .shy-message {
+        font-size: 1em;
+    }
 }

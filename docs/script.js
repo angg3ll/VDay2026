@@ -72,25 +72,34 @@ function moveNoButton() {
 
 function positionShyMessage() {
     const buttonRect = noBtn.getBoundingClientRect(); // Button's position in viewport
-    const parentRect = noBtn.parentElement.getBoundingClientRect(); // Parent (.no-train-section)'s position in viewport
+    const parent = shyContainer.parentElement; // .no-train-section
+    const parentRect = parent.getBoundingClientRect(); // Parent's position in viewport
     const shyContainerRect = shyContainer.getBoundingClientRect(); // Shy container's dimensions
 
-    // Calculate position relative to the parent container
-    // Want shyContainer to be left of the button.
-    // Button's horizontal center relative to parent's left edge
-    const buttonCenterXRelativeToParent = (buttonRect.left + buttonRect.width / 2) - parentRect.left;
-    // Button's vertical center relative to parent's top edge
+    const padding = 15; // Padding from screen edges
+
+    // Try placing to the left of the button
+    let desiredLeft = (buttonRect.left - parentRect.left) - shyContainerRect.width - 15;
+    
+    // If it goes off the left edge, try placing it to the right of the button
+    if (desiredLeft < padding) {
+        desiredLeft = (buttonRect.right - parentRect.left) + 15;
+    }
+
+    // Ensure it stays within screen width
+    const maxLeft = parentRect.width - shyContainerRect.width - padding;
+    desiredLeft = Math.max(padding, Math.min(desiredLeft, maxLeft));
+
+    // Vertical positioning (centered relative to button)
     const buttonCenterYRelativeToParent = (buttonRect.top + buttonRect.height / 2) - parentRect.top;
+    let desiredTop = buttonCenterYRelativeToParent - shyContainerRect.height / 2;
+    
+    // Ensure it stays within parent height boundaries
+    const maxTop = parentRect.height - shyContainerRect.height - padding;
+    desiredTop = Math.max(padding, Math.min(desiredTop, maxTop));
 
-    // Desired position for shyContainer's center
-    // Want shyContainer's right edge to be 15px to the left of the button's left edge (which is buttonRect.left - parentRect.left)
-    const desiredRightEdgeRelativeToParentLeft = (buttonRect.left - parentRect.left) - 15;
-    const desiredLeftRelativeToParent = desiredRightEdgeRelativeToParentLeft - shyContainerRect.width;
-
-    const desiredTopRelativeToParent = buttonCenterYRelativeToParent - shyContainerRect.height / 2;
-
-    shyContainer.style.left = `${desiredLeftRelativeToParent}px`;
-    shyContainer.style.top = `${desiredTopRelativeToParent}px`;
+    shyContainer.style.left = `${desiredLeft}px`;
+    shyContainer.style.top = `${desiredTop}px`;
     shyContainer.style.transform = 'none'; // No additional transform
 }
 
